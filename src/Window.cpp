@@ -637,6 +637,7 @@ void Window::displaySequence(Sequence& seq)
         if (cursorvalid) {
             ImVec2 im = ImFloor(view->window2image(cursor, displayarea.getCurrentSize(), winSize, factor));
             gHoveredPixel = im;
+            ImGui::SetMouseCursor(ImGuiMouseCursor_ResizeAll);
         }
 
         if (cursorvalid && zooming && ImGui::GetIO().MouseWheel != 0.f) {
