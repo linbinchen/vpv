@@ -245,7 +245,7 @@ steps:
 - name: mkappimage
   image: archlinux:latest
   commands:
-  - pacman -S --noconfirm wget
+  - pacman -Sy --noconfirm wget
   - cd build
   - wget https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage
   - chmod +x linuxdeploy-x86_64.AppImage
