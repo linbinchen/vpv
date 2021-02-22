@@ -237,7 +237,7 @@ steps:
   commands:
   - apt-get update
   - apt-get install -qq build-essential cmake wget
-  - apt-get install -qq libsdl2-dev libpng-dev libtiff-dev libjpeg-dev
+  - apt-get install -qq libsdl2-dev libpng-dev libtiff-dev libjpeg-dev libgdal-dev
   - apt-get remove -qq libsdl2-dev  # remove it but keep the dependencies
   - wget https://www.libsdl.org/release/SDL2-2.0.12.tar.gz
   - tar xvf SDL2-*.tar.gz
@@ -248,13 +248,12 @@ steps:
   - cd ..
   - mkdir build
   - cd build
-  - cmake .. -DCMAKE_INSTALL_PREFIX=/usr
+  - cmake .. -DCMAKE_INSTALL_PREFIX=/usr -DUSE_GDAL=ON
   - make -j6
   - make install DESTDIR=AppDir
   - wget https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage
   - chmod +x linuxdeploy-x86_64.AppImage
   - ./linuxdeploy-x86_64.AppImage --appimage-extract-and-run --appdir AppDir/ --executable AppDir/usr/bin/vpv --icon-file=../misc/icon.svg --output appimage
-  - ls -l
 - name: publish
   image: plugins/github-release
   settings:
