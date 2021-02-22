@@ -236,16 +236,17 @@ steps:
   image: archlinux:latest
   commands:
   - pacman -Sy --noconfirm
-  - pacman -S --noconfirm make gcc cmake sdl2 libpng libtiff libjpeg gdal wget
+  - pacman -S --noconfirm make gcc cmake sdl2 libpng libtiff libjpeg gdal
   - mkdir build
   - cd build
   - cmake .. -DCMAKE_INSTALL_PREFIX=/usr -DUSE_GDAL=ON
   - make -j6
+  - make install DESTDIR=AppDir
 - name: mkappimage
   image: archlinux:latest
   commands:
+  - pacman -S --noconfirm wget
   - cd build
-  - make install DESTDIR=AppDir
   - wget https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage
   - chmod +x linuxdeploy-x86_64.AppImage
   - ./linuxdeploy-x86_64.AppImage --appimage-extract-and-run --appdir AppDir/ --executable AppDir/usr/bin/vpv --icon-file=../misc/icon.svg --output appimage
