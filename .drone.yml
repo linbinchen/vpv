@@ -261,7 +261,7 @@ steps:
     api_key:
       from_secret: github_token
     draft: true
-    files: vpv-*.AppImage
+    files: build/vpv-*.AppImage
   when:
     event: tag
 
