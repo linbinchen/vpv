@@ -243,13 +243,13 @@ steps:
   - tar xvf SDL2-*.tar.gz
   - cd SDL2-*/
   - ./configure
-  - make
+  - make -j6
   - make install
   - cd ..
   - mkdir build
   - cd build
   - cmake .. -DCMAKE_INSTALL_PREFIX=/usr
-  - make
+  - make -j6
   - make install DESTDIR=AppDir
   - wget https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage
   - chmod +x linuxdeploy-x86_64.AppImage
@@ -262,5 +262,7 @@ steps:
       from_secret: github_token
     draft: true
     files: vpv-*.AppImage
+  when:
+    event: tag
 
 
