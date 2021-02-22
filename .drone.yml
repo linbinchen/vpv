@@ -261,6 +261,6 @@ steps:
     api_key:
       from_secret: github_token
     draft: true
-    files: appimage/*
+    files: vpv-*.AppImage
 
 
