@@ -225,7 +225,7 @@
   #commands:
   #- pacman --noconfirm -Syu
   #- sudo -u aur yay --noconfirm -S vpv
----
+#---
 
 kind: pipeline
 type: docker
