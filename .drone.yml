@@ -233,7 +233,7 @@ name: ubuntu-bionic-mkappimage
 
 steps:
 - name: mkappimage
-  image: ubuntu:xenial
+  image: ubuntu:bionic
   commands:
   - apt-get update
   - apt-get install -qq build-essential cmake wget
