@@ -252,9 +252,8 @@ set(SOURCES ${SOURCES}
    )
 include_directories(external/imgui/examples/libs/gl3w)
 
-if(SDL2_LIBRARIES)
-   string(STRIP ${SDL2_LIBRARIES} SDL2_LIBRARIES)
-   set(LIBS ${LIBS} ${SDL2_LIBRARIES})
+if(SDL2_LIBRARY)
+   set(LIBS ${LIBS} ${SDL2_LIBRARY})
 else()
    if (WINDOWS)
       set(LIBS ${LIBS} mingw32 SDL2main SDL2)
@@ -382,43 +381,43 @@ execute_process(
     SHORT_HASH)
 
 # If running in script mode (this runs on every build)
-if (CMAKE_SCRIPT_MODE_FILE)
-    if (EXISTS "${SHORT_HASH_FILE}")
-        file(READ ${SHORT_HASH_FILE} READ_IN_SHORT_HASH)
-    else()
-        set(READ_IN_SHORT_HASH "")
-    endif()
+# if (CMAKE_SCRIPT_MODE_FILE)
+#     if (EXISTS "${SHORT_HASH_FILE}")
+#         file(READ ${SHORT_HASH_FILE} READ_IN_SHORT_HASH)
+#     else()
+#         set(READ_IN_SHORT_HASH "")
+#     endif()
 
-    if (NOT ("${READ_IN_SHORT_HASH}" STREQUAL "${SHORT_HASH}"))
-        message(STATUS "Short hash is out of date")
-        # This will update short_hash.txt, causing cmake to reconfigure
-        file(WRITE ${SHORT_HASH_FILE} ${SHORT_HASH})
-    endif()
+#     if (NOT ("${READ_IN_SHORT_HASH}" STREQUAL "${SHORT_HASH}"))
+#         message(STATUS "Short hash is out of date")
+#         # This will update short_hash.txt, causing cmake to reconfigure
+#         file(WRITE ${SHORT_HASH_FILE} ${SHORT_HASH})
+#     endif()
 
-    # Else running as part of cmake configure
-else()
-    set(SHORT_HASH_FILE ${CMAKE_CURRENT_BINARY_DIR}/short_hash.txt)
-    file(WRITE ${SHORT_HASH_FILE} ${SHORT_HASH})
+#     # Else running as part of cmake configure
+# else()
+#     set(SHORT_HASH_FILE ${CMAKE_CURRENT_BINARY_DIR}/short_hash.txt)
+#     file(WRITE ${SHORT_HASH_FILE} ${SHORT_HASH})
 
-    # The trick here is to make sure short_hash.txt is listed as a byproduct
-    add_custom_target(
-        git_short_hash
-        BYPRODUCTS
-        ${SHORT_HASH_FILE}
-        COMMAND
-        ${CMAKE_COMMAND}
-        "-DSHORT_HASH_FILE=${SHORT_HASH_FILE}"
-        "-P" "${CMAKE_CURRENT_LIST_FILE}"
-        COMMENT
-        "Re-checking short hash..."
-        VERBATIM
-        USES_TERMINAL)
+#     # The trick here is to make sure short_hash.txt is listed as a byproduct
+#     add_custom_target(
+#         git_short_hash
+#         BYPRODUCTS
+#         ${SHORT_HASH_FILE}
+#         COMMAND
+#         ${CMAKE_COMMAND}
+#         "-DSHORT_HASH_FILE=${SHORT_HASH_FILE}"
+#         "-P" "${CMAKE_CURRENT_LIST_FILE}"
+#         COMMENT
+#         "Re-checking short hash..."
+#         VERBATIM
+#         USES_TERMINAL)
 
-    # This configure_file makes cmake reconfigure dependent on short_hash.txt
-    configure_file(${SHORT_HASH_FILE} ${SHORT_HASH_FILE}.junk COPYONLY)
+#     # This configure_file makes cmake reconfigure dependent on short_hash.txt
+#     configure_file(${SHORT_HASH_FILE} ${SHORT_HASH_FILE}.junk COPYONLY)
 
-    message(STATUS "Short Hash: ${SHORT_HASH}")
-endif()
+#     message(STATUS "Short Hash: ${SHORT_HASH}")
+# endif()
 
 string(STRIP "${SHORT_HASH}" SHORT_HASH)
 set(VPV_VERSION "" CACHE STRING "version string as fallback to the git describe")

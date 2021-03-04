@@ -49,6 +49,27 @@ make
 sudo make install
 ```
 
+On Windows (MINGW64/MSYS2)
+Install mingw-w64 toolchain and dependencies
+```sh
+pacman -S mingw-w64-x86_64-toolchain
+pacman -S mingw-w64-x86_64-libpng mingw-w64-x86_64-libtiff mingw-w64-x86_64-SDL2
+
+```
+If compile under mingw64 shell:
+```sh
+pacman -S mingw-w64-x86_64-cmake
+cmake -B build -DMSYS=1 -G "MinGW Makefiles"
+cmake --build build -j34
+```
+If compile under powershell or cmd, add "C:/msys64/mingw64/bin" to windows PATH environment variable
+```
+choco install cmake
+cmake -B build -DMSYS=1 -G "MinGW Makefiles"
+cmake --build build -j34
+
+```
+
 
 Concepts
 --------
